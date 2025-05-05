@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Cadastro - CyberShield</title>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --secondary: #00365a;
+            --accent: #ff6b00;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f0f2f5;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .page-title {
+            background-color: var(--light);
+            padding: 2rem 0;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .page-title h1 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-title p {
+            color: #6c757d;
+        }
+        
+        .crud-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .form-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+        
+        .form-section h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--secondary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0069d9;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .users-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+        
+        .users-section h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .search-box {
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .search-box input {
+            flex: 1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+        
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+        
+        .status-active {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .status-inactive {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        
+        .pagination li {
+            margin: 0 0.25rem;
+        }
+        
+        .pagination li a {
+            display: inline-block;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+            color: var(--primary);
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .pagination li a:hover {
+            background-color: #e9ecef;
+        }
+        
+        .pagination li.active a {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            border: 1px solid transparent;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        .alert-warning {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+            color: #856404;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-header {
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            color: var(--secondary);
+            margin: 0;
+        }
+        
+        .close {
+            color: #aaa;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: var(--dark);
+        }
+        
+        .modal-body {
+            padding: 1rem;
+        }
+        
+        .modal-footer {
+            padding: 1rem;
+            border-top: 1px solid #dee2e6;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .crud-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">Cyber<span>Shield</span></a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                    <li><a href="cadastro.html" class="active">Cadastro</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-title">
+        <div class="container">
+            <h1>Sistema de Cadastro</h1>
+            <p>Gerencie usuários e clientes da plataforma CyberShield</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div id="alertContainer"></div>
+        
+        <div class="crud-container">
+            <div class="form-section">
+                <h2 id="formTitle">Adicionar Usuário</h2>
+                <form id="userForm">
+                    <input type="hidden" id="userId">
+                    
+                    <div class="form-group">
+                        <label for="name">Nome Completo</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="tel" class="form-control" id="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="role">Cargo</label>
+                        <select class="form-control" id="role" required>
+                            <option value="">Selecione...</option>
+                            <option value="admin">Administrador</option>
+                            <option value="manager">Gerente</option>
+                            <option value="analyst">Analista</option>
+                            <option value="client">Cliente</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="access">Nível de Acesso</label>
+                        <select class="form-control" id="access" required>
+                            <option value="">Selecione...</option>
+                            <option value="1">Nível 1 - Básico</option>
+                            <option value="2">Nível 2 - Intermediário</option>
+                            <option value="3">Nível 3 - Avançado</option>
+                            <option value="4">Nível 4 - Completo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select class="form-control" id="status" required>
+                            <option value="active">Ativo</option>
+                            <option value="inactive">Inativo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="saveBtn">Salvar Usuário</button>
+                        <button type="button" class="btn btn-warning" id="resetBtn">Limpar Formulário</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="users-section">
+                <h2>Lista de Usuários</h2>
+                
+                <div class="search-box">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Buscar usuários...">
+                    <button class="btn btn-primary" id="searchBtn">Buscar</button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table id="usersTable">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Cargo</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dados serão inseridos via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <ul class="pagination" id="pagination">
+                    <li><a href="#" data-page="1">1</a></li>
+                    <li class="active"><a href="#" data-page="2">2</a></li>
+                    <li><a href="#" data-page="3">3</a></li>
+                    <li><a href="#" data-page="next">›</a></li>
+                    <li><a href="#" data-page="last">»</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirmar Exclusão</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza que deseja excluir o usuário <span id="deleteUserName"></span>?</p>
+                <p>Esta ação não pode ser desfeita.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmDelete" class="btn btn-danger">Excluir</button>
+                <button id="cancelDelete" class="btn btn-primary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Visualização de Detalhes -->
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalhes do Usuário</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <p id="viewName"></p>
+                </div>
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <p id="viewEmail"></p>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <p id="viewPhone"></p>
+                </div>
+                <div class="form-group">
+                    <label>Cargo</label>
+                    <p id="viewRole"></p>
+                </div>
+                <div class="form-group">
+                    <label>Nível de Acesso</label>
+                    <p id="viewAccess"></p>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <p id="viewStatus"></p>
+                </div>
+                <div class="form-group">
+                    <label>Data de Cadastro</label>
+                    <p id="viewCreatedAt"></p>
+                </div>
+                <div class="form-group">
+                    <label>Última Atualização</label>
+                    <p id="viewUpdatedAt"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="closeViewModal" class="btn btn-primary">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados de exemplo para simulação do CRUD
+        let users = [
+            {
+                id: 1,
+                name: "João Silva",
+                email: "joao.silva@exemplo.com",
+                phone: "(11) 98765-4321",
+                role: "admin",
+                access: "4",
+                status: "active",
+                createdAt: "2025-04-15 09:30:45",
+                updatedAt: "2025-05-01 14:22:10"
+            },
+            {
+                id: 2,
+                name: "Maria Oliveira",
+                email: "maria.oliveira@exemplo.com",
+                phone: "(21) 99876-5432",
+                role: "manager",
+                access: "3",
+                status: "active",
+                createdAt: "2025-04-18 10:15:30",
+                updatedAt: "2025-04-18 10:15:30"
+            },
+            {
+                id: 3,
+                name: "Carlos Santos",
+                email: "carlos.santos@exemplo.com",
+                phone: "(31) 97654-3210",
+                role: "analyst",
+                access: "2",
+                status: "inactive",
+                createdAt: "2025-04-20 14:45:12",
+                updatedAt: "2025-05-02 08:30:15"
+            },
+            {
+                id: 4,
+                name: "Ana Ferreira",
+                email: "ana.ferreira@exemplo.com",
+                phone: "(41) 96543-2109",
+                role: "client",
+                access: "1",
+                status: "active",
+                createdAt: "2025-04-22 16:20:40",
+                updatedAt: "2025-04-22 16:20:40"
+            },
+        ];
+        
+        // Elementos DOM
+        const userForm = document.getElementById('userForm');
+        const userIdInput = document.getElementById('userId');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const roleInput = document.getElementById('role');
+        const accessInput = document.getElementById('access');
+        const statusInput = document.getElementById('status');
+        const saveBtn = document.getElementById('saveBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const formTitle = document.getElementById('formTitle');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const usersTable = document.getElementById('usersTable').getElementsByTagName('tbody')[0];
+        const alertContainer = document.getElementById('alertContainer');
+        const deleteModal = document.getElementById('deleteModal');
+        const viewModal = document.getElementById('viewModal');
+        
+        // Funções auxiliares
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = message;
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alert);
+            
+            // Remover o alerta após 5 segundos
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+        
+        function renderRoleText(role) {
+            const roles = {
+                'admin': 'Administrador',
+                'manager': 'Gerente',
+                'analyst': 'Analista',
+                'client': 'Cliente'
+            };
+            return roles[role] || role;
+        }
+        
+        function renderAccessText(access) {
+            const levels = {
+                '1': 'Nível 1 - Básico',
+                '2': 'Nível 2 - Intermediário',
+                '3': 'Nível 3 - Avançado',
+                '4': 'Nível 4 - Completo'
+            };
+            return levels[access] || access;
+        }
+        
+        function renderStatusText(status) {
+            if (status === 'active') {
+                return '<span class="status-active">Ativo</span>';
+            } else {
+                return '<span class="status-inactive">Inativo</span>';
+            }
+        }
+        
+        // Carregar usuários na tabela
+        function loadUsers(usersList = users) {
+            usersTable.innerHTML = '';
+            
+            if (usersList.length === 0) {
+                const row = usersTable.insertRow();
+                const cell = row.insertCell(0);
+                cell.colSpan = 5;
+                cell.textContent = 'Nenhum usuário encontrado';
+                cell.style.textAlign = 'center';
+                return;
+            }
+            
+            usersList.forEach(user => {
+                const row = usersTable.insertRow();
+                
+                const nameCell = row.insertCell(0);
+                nameCell.textContent = user.name;
+                
+                const emailCell = row.insertCell(1);
+                emailCell.textContent = user.email;
+                
+                const roleCell = row.insertCell(2);
+                roleCell.textContent = renderRoleText(user.role);
+                
+                const statusCell = row.insertCell(3);
+                statusCell.innerHTML = renderStatusText(user.status);
+                
+                const actionsCell = row.insertCell(4);
+                actionsCell.innerHTML = `
+                    <div class="action-buttons">
+                        <button class="btn btn-sm btn-primary view-btn" data-id="${user.id}">Ver</button>
+                        <button class="btn btn-sm btn-warning edit-btn" data-id="${user.id}">Editar</button>
+                        <button class="btn btn-sm btn-danger delete-btn" data-id="${user.id}" data-name="${user.name}">Excluir</button>
+                    </div>
+                `;
+            });
+            
+            // Adicionar event listeners aos botões
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const userId = parseInt(e.target.getAttribute('data-id'));
+                    openViewModal(userId);
+                });
+            });
+            
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const userId = parseInt(e.target.getAttribute('data-id'));
+                    editUser(userId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const userId = parseInt(e.target.getAttribute('data-id'));
+                    const userName = e.target.getAttribute('data-name');
+                    openDeleteModal(userId, userName);
+                });
+            });
+        }
+        
+        // Buscar usuários
+        function searchUsers() {
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm === '') {
+                loadUsers();
+                return;
+            }
+            
+            const filteredUsers = users.filter(user => 
+                user.name.toLowerCase().includes(searchTerm) ||
+                user.email.toLowerCase().includes(searchTerm) ||
+                renderRoleText(user.role).toLowerCase().includes(searchTerm)
+            );
+            
+            loadUsers(filteredUsers);
+        }
+        
+        // Resetar formulário
+        function resetForm() {
+            userForm.reset();
+            userIdInput.value = '';
+            formTitle.textContent = 'Adicionar Usuário';
+            saveBtn.textContent = 'Salvar Usuário';
+        }
+        
+        // Editar usuário
+        function editUser(userId) {
+            const user = users.find(u => u.id === userId);
+            if (user) {
+                userIdInput.value = user.id;
+                nameInput.value = user.name;
+                emailInput.value = user.email;
+                phoneInput.value = user.phone;
+                roleInput.value = user.role;
+                accessInput.value = user.access;
+                statusInput.value = user.status;
+                
+                formTitle.textContent = 'Editar Usuário';
+                saveBtn.textContent = 'Atualizar Usuário';
+                
+                // Rolar para o formulário
+                document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Abrir modal de exclusão
+        function openDeleteModal(userId, userName) {
+            document.getElementById('deleteUserName').textContent = userName;
+            
+            deleteModal.style.display = 'flex';
+            
+            // Configurar botões do modal
+            document.getElementById('confirmDelete').onclick = () => {
+                deleteUser(userId);
+                deleteModal.style.display = 'none';
+            };
+            
+            document.getElementById('cancelDelete').onclick = () => {
+                deleteModal.style.display = 'none';
+            };
+            
+            // Fechar modal ao clicar no X
+            deleteModal.querySelector('.close').onclick = () => {
+                deleteModal.style.display = 'none';
+            };
+            
+            // Fechar modal ao clicar fora
+            window.onclick = (event) => {
+                if (event.target === deleteModal) {
+                    deleteModal.style.display = 'none';
+                }
+            };
+        }
+        
+        // Abrir modal de visualização
+        function openViewModal(userId) {
+            const user = users.find(u => u.id === userId);
+            if (user) {
+                document.getElementById('viewName').textContent = user.name;
+                document.getElementById('viewEmail').textContent = user.email;
+                document.getElementById('viewPhone').textContent = user.phone;
+                document.getElementById('viewRole').textContent = renderRoleText(user.role);
+                document.getElementById('viewAccess').textContent = renderAccessText(user.access);
+                document.getElementById('viewStatus').textContent = user.status === 'active' ? 'Ativo' : 'Inativo';
+                document.getElementById('viewCreatedAt').textContent = user.createdAt;
+                document.getElementById('viewUpdatedAt').textContent = user.updatedAt;
+                
+                viewModal.style.display = 'flex';
+                
+                // Configurar botão do modal
+                document.getElementById('closeViewModal').onclick = () => {
+                    viewModal.style.display = 'none';
+                };
+                
+                // Fechar modal ao clicar no X
+                viewModal.querySelector('.close').onclick = () => {
+                    viewModal.style.display = 'none';
+                };
+                
+                // Fechar modal ao clicar fora
+                window.onclick = (event) => {
+                    if (event.target === viewModal) {
+                        viewModal.style.display = 'none';
+                    }
+                };
+            }
+        }
+        
+        // Excluir usuário
+        function deleteUser(userId) {
+            const index = users.findIndex(u => u.id === userId);
+            if (index !== -1) {
+                users.splice(index, 1);
+                loadUsers();
+                showAlert('Usuário excluído com sucesso!', 'success');
+            }
+        }
+        
+        // Formatar data atual
+        function getCurrentDateTime() {}
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            return '$'{}
