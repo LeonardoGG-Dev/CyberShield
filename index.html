@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberShield - Soluções de Segurança Web</title>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --secondary: #00365a;
+            --accent: #ff6b00;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            background-image: linear-gradient(rgba(0, 54, 90, 0.8), rgba(0, 54, 90, 0.8)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 8rem 0;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #ff8c33;
+            transform: translateY(-3px);
+        }
+        
+        .services {
+            padding: 5rem 0;
+            background-color: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+        
+        .section-title p {
+            color: #6c757d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .about {
+            padding: 5rem 0;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            color: var(--secondary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonials {
+            padding: 5rem 0;
+            background-color: var(--light);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 1rem;
+        }
+        
+        .client-name {
+            font-weight: 600;
+        }
+        
+        .client-position {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .cta {
+            background-color: var(--primary);
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .cta .btn {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .cta .btn:hover {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            padding: 3rem 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent);
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col ul li a {
+            color: #f8f9fa;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <div class="logo">Cyber<span>Shield</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Serviços</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#testimonials">Depoimentos</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Protegendo seu Negócio no Mundo Digital</h1>
+            <p>Soluções de segurança web avançadas para proteger sua empresa contra as ameaças cibernéticas modernas.</p>
+            <a href="#contact" class="btn">Consulta Gratuita</a>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nossos Serviços</h2>
+                <p>Oferecemos soluções abrangentes de segurança web para empresas de todos os tamanhos.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3>Análise de Vulnerabilidades</h3>
+                    <p>Identificamos e corrigimos falhas de segurança em seu sistema antes que invasores possam explorá-las.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Proteção contra DDoS</h3>
+                    <p>Mantenha seu site e aplicativos online mesmo durante os ataques mais sofisticados de negação de serviço.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔐</div>
+                    <h3>Certificados SSL/TLS</h3>
+                    <p>Garanta conexões seguras e proteja dados sensíveis com nossos certificados de segurança avançados.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👤</div>
+                    <h3>Autenticação Multifator</h3>
+                    <p>Implemente camadas adicionais de segurança para proteger contas e dados críticos do negócio.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🕵️</div>
+                    <h3>Monitoramento 24/7</h3>
+                    <p>Nossa equipe de especialistas monitora sua infraestrutura constantemente para detectar e responder a ameaças.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Conformidade LGPD</h3>
+                    <p>Consultoria especializada para adequar seu negócio às exigências da Lei Geral de Proteção de Dados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="equipe.jpg" alt="Equipe CyberShield" style="width: 100%; border-radius: 8px;">
+                </div>
+                <div class="about-text">
+                    <h2>Por que escolher a CyberShield?</h2>
+                    <p>Com mais de 10 anos de experiência em segurança cibernética, a CyberShield se destaca como líder no mercado brasileiro. Nossa equipe é formada por especialistas certificados nas mais respeitadas instituições de segurança do mundo.</p>
+                    <p>Utilizamos tecnologias de ponta e metodologias comprovadas para garantir a segurança de seus ativos digitais. Nosso compromisso é oferecer soluções personalizadas que atendam às necessidades específicas do seu negócio.</p>
+                    <p>Já protegemos mais de 500 empresas contra ameaças cibernéticas, desde startups até grandes corporações.</p>
+                    <a href="#contact" class="btn">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>O que nossos clientes dizem</h2>
+                <p>A confiança de nossos clientes é nosso maior patrimônio.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"A implementação das soluções de segurança da CyberShield nos permitiu dormir tranquilos. A equipe é extremamente profissional e atenciosa."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Ricardo+Almeida&background=4a90e2&color=ffffff" alt="Avatar">
+                        
+                        </div>
+                        <div>
+                            <div class="client-name">Ricardo Almeida</div>
+                            <div class="client-position">CTO, TechSolutions</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"Após um incidente de segurança que quase comprometeu nossos dados, contratamos a CyberShield. Desde então, não tivemos mais problemas e nossos sistemas estão muito mais seguros."</p>
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Fernanda+Costa&background=9b59b6&color=ffffff" alt="Avatar">
+
+                        </div>
+                        <div>
+                            <div class="client-name">Fernanda Costa</div>
+                            <div class="client-position">Diretora, Fintech Inovadora</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p>"O serviço de conformidade com a LGPD da CyberShield foi fundamental para adequarmos nossos processos. Recomendo fortemente!"</p>
+                    <div class="client-info">
+                        <div class="client-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Paulo+Mendes&background=f39c12&color=ffffff" alt="Avatar">
+
+                        </div>
+                        <div>
+                            <div class="client-name">Paulo Mendes</div>
+                            <div class="client-position">CEO, Retail Express</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta">
+        <div class="container">
+            <h2>Pronto para proteger seu negócio?</h2>
+            <p>Entre em contato hoje mesmo para uma avaliação gratuita de segurança e descubra como podemos ajudar sua empresa a se proteger contra ameaças cibernéticas.</p>
+            <a href="#" class="btn">Solicitar Orçamento</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">Cyber<span>Shield</span></div>
+                    <p>Soluções avançadas de segurança web para empresas que valorizam a proteção de seus ativos digitais.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Serviços</a></li>
+                        <li><a href="#about">Sobre</a></li>
+                        <li><a href="#testimonials">Depoimentos</a></li>
+                        <li><a href="#contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Serviços</h4>
+                    <ul>
+                        <li><a href="#">Análise de Vulnerabilidades</a></li>
+                        <li><a href="#">Proteção DDoS</a></li>
+                        <li><a href="#">Certificados SSL</a></li>
+                        <li><a href="#">Monitoramento 24/7</a></li>
+                        <li><a href="#">Conformidade LGPD</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contato</h4>
+                    <ul>
+                        <li>contato@cybershield.com.br</li>
+                        <li>+55 (11) 4321-8765</li>
+                        <li>Av. Paulista, 1000, São Paulo - SP</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CyberShield. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Script simples para rolagem suave entre seções
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
